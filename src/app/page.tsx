@@ -1,42 +1,71 @@
 "use client";
 import { useEffect, useState } from "react";
-import ServerCard from "./components/servercard/ServerCard";
-/*
-  Welcome to the simplegamehosting coding assignment!
-
-  if you got this far great job! 🎉
-  Now it's your turn to shine! 🌟
-  
-  The mock data is fetched from the server and displayed on the page.
-
-  Your task is to create a dynamic card component for each server in the list.
-  - The card should display the server's name, game, players, status, version etc, bonus points for displaying any extra data from the json response.
-  - please use tailwind to style your components, you can use the existing styles in this file as a reference.
-  - You can also use any other libraries you like to help you build the UI.
-  
-  for extra info please read the README.md file in the root of the project.
-*/
+import { Card, CardContent, Typography, Grid, CircularProgress, Container } from "@mui/material";
+import { containerStyles, loadingContainerStyles, cardStyles, cardContentStyles } from "./components/servercard/card-styles/cardStyles"
 
 export default function Home() {
-  const [serverData, setServerData] = useState(null);
-  // you can update this fetching code if required but it's not necessary for the assignment.
+  const [serverData, setServerData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchServerData = async () => {
       try {
         const response = await fetch("/api/mock");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         setServerData(data);
       } catch (error) {
         console.error("Failed to fetch server data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchServerData();
   }, []);
 
+  if (loading) {
+    return (
+      <Container sx={loadingContainerStyles}>
+        <CircularProgress />
+      </Container>
+    );
+  }
+
   return (
-    <div>
-      <ServerCard/>
-    </div>
+    <Container sx={containerStyles}>
+      <Grid container spacing={4}>
+        {serverData.map((item, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <Card variant="outlined" sx={cardStyles}>
+              <CardContent sx={cardContentStyles}>
+                <Typography variant="h6" gutterBottom>
+                  {item.name || "Unknown Server"}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Game:</strong> {item.game || "N/A"}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Players:</strong> {item.players || "N/A"}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Status:</strong> {item.status || "N/A"}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Version:</strong> {item.version || "N/A"}
+                </Typography>
+                {item.extraData && (
+                  <Typography variant="body2" color="textSecondary">
+                    <strong>Extra Data:</strong> {JSON.stringify(item.extraData)}
+                  </Typography>
+                )}
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }

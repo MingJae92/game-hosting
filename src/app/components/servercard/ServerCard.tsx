@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 
 function ServerCard() {
+
+
+  
+
   return (
-    <div>serverCard</div>
-  )
+    <div>
+    </div>
+  );
 }
 
-export default ServerCard
+export default ServerCard;
