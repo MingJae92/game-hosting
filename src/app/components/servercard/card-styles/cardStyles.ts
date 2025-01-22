@@ -20,3 +20,10 @@ export const cardContentStyles: SxProps<Theme> = {
   flexDirection: "column",
   gap: 1,
 };
+
+export const swiperStyles: SxProps<Theme> = {
+  "& .swiper-slide": {
+    display: "flex",
+    justifyContent: "center",
+  },
+};
