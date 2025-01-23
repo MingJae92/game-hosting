@@ -16,8 +16,8 @@ import "swiper/css/pagination";
 import {
   containerStyles,
   loadingContainerStyles,
-  cardStyles,
-  cardContentStyles,
+  minecraftCardStyles,
+  minecraftCardContentStyles,
   swiperStyles,
 } from "./components/servercard/card-styles/cardStyles";
 
@@ -54,6 +54,11 @@ export default function Home() {
 
   return (
     <Container sx={containerStyles}>
+      {/* Minecraft Server List Header */}
+      <Typography variant="h4" align="center" sx={{ marginBottom: 3 }}>
+        Minecraft Server List
+      </Typography>
+
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Swiper
           modules={[Pagination]}
@@ -62,15 +67,15 @@ export default function Home() {
           pagination={{ clickable: true }}
           style={{
             width: "100%",
-            paddingBottom: "20px",
+            paddingBottom: "0.1rem",
             display: "flex",
             justifyContent: "center",
           }}
         >
           {serverData.map((item, index) => (
             <SwiperSlide key={index} style={{ display: "flex", justifyContent: "center" }}>
-              <Card variant="outlined" sx={cardStyles}>
-                <CardContent sx={cardContentStyles}>
+              <Card variant="outlined" sx={minecraftCardStyles}>
+                <CardContent sx={minecraftCardContentStyles}>
                   <Typography variant="h6" gutterBottom>
                     {item.name || "Unknown Server"}
                   </Typography>
