@@ -29,9 +29,6 @@ export default function Home() {
     const fetchServerData = async () => {
       try {
         const response = await fetch("/api/mock");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
         const data = await response.json();
         setServerData(data);
       } catch (error) {
@@ -88,11 +85,9 @@ export default function Home() {
                   <Typography variant="body2" color="textSecondary">
                     <strong>Version:</strong> {item.version || "N/A"}
                   </Typography>
-                  {item.mods?.length > 0 && (
-                    <Typography variant="body2" color="textSecondary">
-                      <strong>Mods:</strong> {item.mods.join(", ")}
-                    </Typography>
-                  )}
+                  <Typography variant="body2" color="textSecondary">
+                    <strong>Mods:</strong> {item.mods.join(", ")}
+                  </Typography>
                 </CardContent>
               </Card>
             </SwiperSlide>
