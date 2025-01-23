@@ -1,6 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Card, CardContent, Typography, CircularProgress, Container, Box } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CircularProgress,
+  Container,
+  Box,
+} from "@mui/material";
 import { dataSet } from "./components/types/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -11,6 +18,7 @@ import {
   loadingContainerStyles,
   cardStyles,
   cardContentStyles,
+  swiperStyles,
 } from "./components/servercard/card-styles/cardStyles";
 
 export default function Home() {
@@ -46,32 +54,37 @@ export default function Home() {
 
   return (
     <Container sx={containerStyles}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Swiper
           modules={[Pagination]}
           spaceBetween={20}
           slidesPerView={1}
           pagination={{ clickable: true }}
-          style={{ paddingBottom: "20px", width: "100%" }}
+          style={{
+            width: "100%",
+            paddingBottom: "20px",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
           {serverData.map((item, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={index} style={{ display: "flex", justifyContent: "center" }}>
               <Card variant="outlined" sx={cardStyles}>
-                <CardContent sx={{ ...cardContentStyles, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                  <Typography variant="h6" gutterBottom align="center">
+                <CardContent sx={cardContentStyles}>
+                  <Typography variant="h6" gutterBottom>
                     {item.name || "Unknown Server"}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" align="center">
+                  <Typography variant="body2" color="textSecondary">
                     <strong>Game:</strong> {item.game || "N/A"}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" align="center">
+                  <Typography variant="body2" color="textSecondary">
                     <strong>Status:</strong> {item.status || "N/A"}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" align="center">
+                  <Typography variant="body2" color="textSecondary">
                     <strong>Version:</strong> {item.version || "N/A"}
                   </Typography>
                   {item.mods?.length > 0 && (
-                    <Typography variant="body2" color="textSecondary" align="center">
+                    <Typography variant="body2" color="textSecondary">
                       <strong>Mods:</strong> {item.mods.join(", ")}
                     </Typography>
                   )}
