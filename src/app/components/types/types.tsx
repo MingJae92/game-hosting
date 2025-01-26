@@ -8,3 +8,11 @@ export interface dataSet {
     region: string;
     mods: ("Essentials" | "Dynmap" | "GriefPrevention")[]; // Added mods property
 }
+
+export interface theme {
+    mode: 'light' | 'dark'; // Light or dark mode
+    backgroundColor: string;
+    textColor: string;
+}
+
+
